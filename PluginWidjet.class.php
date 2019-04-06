@@ -12,25 +12,19 @@ if (!class_exists('Plugin')) {
     die('Hacking attempt!');
 }
 
-class PluginSubscribe extends Plugin
+class PluginWidjet extends Plugin
 {
-    protected $aInherits = [
-        'entity' => [
-            //'User_User' => '_Subscribe_User'
-        ]
         
-    ];
-    
     public function Init()
     {
-        $this->Lang_AddLangJs([
-            'plugin.subscribe.subscribe.text.subscribe',
-            'plugin.subscribe.subscribe.text.unsubscribe'
-        ]);
+//        $this->Lang_AddLangJs([
+//            'plugin.subscribe.subscribe.text.subscribe',
+//            'plugin.subscribe.subscribe.text.unsubscribe'
+//        ]);
 
-        $this->Component_Add('subscribe:subscribe');
+//        $this->Component_Add('subscribe:subscribe');
 
-        $this->Viewer_AppendScript(Plugin::GetTemplatePath('subscribe'). '/assets/js/init.js');
+//        $this->Viewer_AppendScript(Plugin::GetTemplatePath('subscribe'). '/assets/js/init.js');
     }
 
     public function Activate()

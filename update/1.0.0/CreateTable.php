@@ -1,6 +1,6 @@
 <?php
 
-class PluginSubscribe_Update_CreateTable extends ModulePluginManager_EntityUpdate
+class PluginWidjet_Update_CreateTable extends ModulePluginManager_EntityUpdate
 {
     /**
      * Выполняется при обновлении версии
@@ -8,7 +8,7 @@ class PluginSubscribe_Update_CreateTable extends ModulePluginManager_EntityUpdat
     public function up()
     {
         if($this->exportSQL(Plugin::GetPath(__CLASS__) . '/update/1.0.0/dump.sql')){
-            $this->Message_AddNoticeSingle('Создана таблица sbscribe');
+            $this->Message_AddNoticeSingle('Применены миграции плагина Widjet', null, true);
         }
     }
 
