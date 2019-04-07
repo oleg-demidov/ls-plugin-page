@@ -40,7 +40,7 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
     }
     
     public function EventShow() {
-        
+        $this->Component_RemoveAll();
         $this->SetTemplateAction('widjet');
     }
     

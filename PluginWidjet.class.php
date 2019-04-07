@@ -15,6 +15,11 @@ if (!class_exists('Plugin')) {
 class PluginWidjet extends Plugin
 {
         
+    protected $aInherits = [
+        'template' => [
+            'component.widjet.widjet' => '_components/widjet/widjet.tpl'
+        ]
+    ];
     public function Init()
     {
 //        $this->Lang_AddLangJs([
