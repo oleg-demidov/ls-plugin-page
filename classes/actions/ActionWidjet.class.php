@@ -53,7 +53,7 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
                 $aParams[$key] = $sParam;
             }
         }
-
+        
         $this->Viewer_Assign('aWidjetParams', $aParams);
     }
     
@@ -70,6 +70,9 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
         
         $this->Menu_Get('settings')->setActiveItem('widjet');
         
+        $aTemplates = $this->PluginWidjet_Widjet_GetTemplates();
+
+        $this->Viewer_Assign('aTemplates', $aTemplates);
         $this->Viewer_Assign('aTokens', $aTokens);
         $this->Viewer_Assign('oTokenActive', $oTokenActive);
         $this->SetTemplateAction('settings');      

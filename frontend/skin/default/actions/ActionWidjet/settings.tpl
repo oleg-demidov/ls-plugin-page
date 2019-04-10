@@ -36,10 +36,29 @@
         }
     {/if}
 
-    {foreach Config::Get('plugin.widjet.widjet.list') as $item}
-       {$item}
-    {/foreach}
+    {$items = []}
+    {foreach $aTemplates as $oTemplate}
+        {capture name="pane"}
+            {component "widjet.{$oTemplate->getTemplate()}"}
+        {/capture}
 
+        {$items[] = [
+            text => $oTemplate->getTitle(),
+            name => $oTemplate->getName(),
+            content => $smarty.capture.pane
+        ]}
+    {/foreach}
+    
+    {if $aTemplates}
+        <div class="d-flex">
+            {component "bs-tabs"
+                classes = "mt-3  flex-column"
+                items   = $items
+                bmods   = "pills"
+                classesPanes = "p-3"
+            }
+        </div>
+    {/if}
 
     
 {/block}
