@@ -1,2 +1,2 @@
 
-component widjet
+component widjeter

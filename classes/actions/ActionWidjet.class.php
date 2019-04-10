@@ -28,25 +28,104 @@
  */
 class PluginWidjet_ActionWidjet extends ActionPlugin{
     
+    protected $oUserProfile = null;
+
     public function Init()
     {
-        
+        $this->oUserProfile = $this->User_GetUserByLogin(Router::GetActionEvent());
     }
     protected function RegisterEvent() {  
         
         $this->SetDefaultEvent('show');
         $this->AddEventPreg('/^show$/i','EventShow');
-        $this->AddEventPreg('/^[\w_-]+$/i', '/^settings$/i', ['EventSettings', 'widjet_settings']);
+        $this->AddEventPreg('/^[\w_-]+$/i', '/^settings$/i', '/^[\d]*$/i', ['EventSettings', 'widjet_settings']);
+        $this->AddEventPreg('/^[\w_-]+$/i', '/^add$/i', ['EventAdd', 'widjet_add']);
+        $this->AddEventPreg('/^[\w_-]+$/i', '/^ajax-add$/i', 'EventAjaxAdd');
     }
     
     public function EventShow() {
         $this->Component_RemoveAll();
         $this->SetTemplateAction('widjet');
+        
+        $aParams = [];    
+        foreach ($_REQUEST as $key => $sParam) {
+            if(in_array($key, Config::Get('plugin.widjet.widjet.allow_params')) ){
+                $aParams[$key] = $sParam;
+            }
+        }
+
+        $this->Viewer_Assign('aWidjetParams', $aParams);
     }
     
     public function EventSettings() {
+        if(!$this->oUserProfile ){
+            return $this->EventNotFound();
+        }
+        
+        $aTokens = $this->PluginWidjet_Widjet_GetTokenItemsByUserId($this->oUserProfile->getId());
+        
+        if(!$oTokenActive = $this->PluginWidjet_Widjet_GetTokenById($this->GetParam(1)) and $aTokens){
+            $oTokenActive = $aTokens[0];
+        }
         
         $this->Menu_Get('settings')->setActiveItem('widjet');
-        $this->SetTemplateAction('settings');
+        
+        $this->Viewer_Assign('aTokens', $aTokens);
+        $this->Viewer_Assign('oTokenActive', $oTokenActive);
+        $this->SetTemplateAction('settings');      
+        
+        
+    }
+    
+    public function EventAdd() {
+        if(!$this->oUserProfile){
+            return $this->EventNotFound();
+        }
+        
+        $oToken = Engine::GetEntity('PluginWidjet_Widjet_Token');
+        
+        if(isPost()){
+            $oToken->_setData([
+                'user_id' => $this->oUserProfile->getId(),
+                'domain'  => getRequest('domain')
+            ]);
+            
+            if($oToken->_Validate()){
+                $oToken->Save();
+                $this->Message_AddNotice($this->Lang_Get('common.success.save'), null, true);
+                Router::LocationAction('widjet/'.$this->oUserProfile->getLogin().'/settings');
+            }else{
+                $this->Message_AddError($oToken->_getValidateError());
+            }
+        }
+        
+        $this->Menu_Get('settings')->setActiveItem('widjet');
+        
+        $this->Viewer_Assign('oToken', $oToken);
+        $this->SetTemplateAction('add');
+    }
+    
+    
+    public function EventAjaxAdd() {
+        if(!$this->oUserProfile ){
+            return $this->EventNotFound();
+        }
+        
+//        if(!$oKey = $this->PuginWidjet_Widjet_GetTokenByUserId($oUserProfile->getId())){
+//            $oKey = Engine::GetEntity('PuginWidjet_Widjet_Token', [
+//                'user_id' => $oUserProfile->getId(),
+//                'token' => md5(Config::Get('plugin.widjet.key') . (new DateTime())->format('YmdHis') . $oUserProfile->getDateCreate())
+//            ]);
+//            $oKey->Save();
+//        }
+        
+        $this->Menu_Get('settings')->setActiveItem('widjet');
+        
+        $this->Viewer_Assign('oKey', $oKey);
+        $this->SetTemplateAction('add');
+    }
+    
+    public function EventShutdown() {
+        $this->Viewer_Assign('oUserProfile', $this->oUserProfile);
     }
 }
