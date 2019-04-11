@@ -45,34 +45,30 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
     }
     
     public function EventError() {
-        
+        $this->SetTemplateAction(false);
         
     }
     
     public function EventShow() {
-        
-        $this->Component_Add('bs-media');
-        
-        $this->Component_Add('widjet:widjet');
-        
+        $this->Component_RemoveAll();
+        $this->Component_Add('widjet:widjet');   
+        Config::Set('head.template', ['css' => [], 'js' => []]);
+        $this->Viewer_SetHtmlHeadFiles($this->Asset_BuildHeadItems());
         $this->SetTemplateAction('widjet');
         
         if(!$oToken = $this->PluginWidjet_Widjet_GetTokenByToken(getRequest('token'))){
             return false;
         }
-        
-        $this->Viewer_AssignJs(
-            array(
-                'domain' => $oToken->getDomain(),
-            )
-        );
-        
+               
         $aParams = [];    
         foreach ($_REQUEST as $key => $sParam) {
             if(in_array($key, Config::Get('plugin.widjet.widjet.allow_params')) ){
                 $aParams[$key] = $sParam;
             }
         }
+        
+        $aParams['domain'] = $oToken->getDomain();
+        $aParams['domain_root'] = parse_url(Config::Get('path.root.web'), PHP_URL_HOST);
         
         $this->Viewer_Assign('aWidjetParams', $aParams);
     }
