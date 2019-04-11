@@ -39,7 +39,12 @@
     {$items = []}
     {foreach $aTemplates as $oTemplate}
         {capture name="pane"}
-            {component "widjet.{$oTemplate->getTemplate()}"}
+            <iframe src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}"}" frameborder="0"></iframe><br>
+            {component "bs-form.textarea" 
+                label = $aLang.plugin.widjet.settings.code.label
+                value = "&lt;iframe src=&quot;{router page="widjet/?template={$oTemplate->getTemplate()}"} 
+frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;"}
+            
         {/capture}
 
         {$items[] = [

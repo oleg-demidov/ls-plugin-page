@@ -41,11 +41,31 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
         $this->AddEventPreg('/^[\w_-]+$/i', '/^settings$/i', '/^[\d]*$/i', ['EventSettings', 'widjet_settings']);
         $this->AddEventPreg('/^[\w_-]+$/i', '/^add$/i', ['EventAdd', 'widjet_add']);
         $this->AddEventPreg('/^[\w_-]+$/i', '/^ajax-add$/i', 'EventAjaxAdd');
+        $this->AddEventPreg('/^error_domain$/i', 'EventError');
+    }
+    
+    public function EventError() {
+        
+        
     }
     
     public function EventShow() {
-        $this->Component_RemoveAll();
+        
+        $this->Component_Add('bs-media');
+        
+        $this->Component_Add('widjet:widjet');
+        
         $this->SetTemplateAction('widjet');
+        
+        if(!$oToken = $this->PluginWidjet_Widjet_GetTokenByToken(getRequest('token'))){
+            return false;
+        }
+        
+        $this->Viewer_AssignJs(
+            array(
+                'domain' => $oToken->getDomain(),
+            )
+        );
         
         $aParams = [];    
         foreach ($_REQUEST as $key => $sParam) {
