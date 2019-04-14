@@ -24,7 +24,7 @@ return [
             ]
         ],
         'notices' => [
-            'error_validate_exists' => 'Вы уже подписаны на "%%event_name%%"',
+            'error_validate_exists' => 'Такой домен уже зарегестрирован',
             'add' => 'Вы подписались на "%%event_name%%"',
             'remove' => 'Вы отписались от "%%event_name%%"'
         ]

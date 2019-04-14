@@ -29,7 +29,7 @@ class PluginWidjet extends Plugin
 
 //        $this->Component_Add('subscribe:subscribe');
 
-//        $this->Viewer_AppendScript(Plugin::GetTemplatePath('subscribe'). '/assets/js/init.js');
+        
     }
 
     public function Activate()

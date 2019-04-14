@@ -20,7 +20,8 @@ $config['widjet'] = [
         'show_count',
         'text',
         'text_color',
-        'template'
+        'template',
+        'starWidth'
     ]
 ];
 

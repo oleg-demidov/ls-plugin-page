@@ -36,9 +36,19 @@
 
         <script>
             {strip}
-            var domain_root = "{$aWidjetParams['domain_root']}";
-            var secrity_host = "{$aWidjetParams['domain']}";
-            var aRouter = [];
+                var PATH_ROOT                   = '{router page='/'}',
+                    PATH_SKIN                   = '{cfg 'path.skin.web'}',
+                    PATH_FRAMEWORK_FRONTEND     = '{cfg 'path.framework.frontend.web'}',
+                    PATH_FRAMEWORK_LIBS_VENDOR  = '{cfg 'path.framework.libs_vendor.web'}',
+
+                    LIVESTREET_SECURITY_KEY = '{$LIVESTREET_SECURITY_KEY}',
+                    LANGUAGE                = '{Config::Get('lang.current')}',
+                    WYSIWYG                 = {if Config::Get('view.wysiwyg')}true{else}false{/if},
+                    ACTION = '{$sAction}';
+                var widjet_params = {json var=$aWidjetParams};
+                var domain_root = "{$aWidjetParams['domain_root']}";
+                var secrity_host = "{$aWidjetParams['domain']}";
+                var aRouter = [];
             {foreach $aRouter as $sPage => $sPath}
                 aRouter['{$sPage}'] = '{$sPath}';
             {/foreach}
@@ -52,7 +62,7 @@
 
 
 
-<body class="{$component} {cmods name=$component mods=$mods} {$classes}" {cattr list=$attributes}>
+<body class="{$component}-widjet {cmods name=$component mods=$mods} {$classes}" {cattr list=$attributes}>
     {block 'layout_body'}{/block}
 
     

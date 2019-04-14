@@ -20,6 +20,10 @@ class PluginWidjet_ModuleWidjet_EntityToken extends EntityORM
         ]
     ];
     
+    protected $aRelations = array(
+        'user' => array(self::RELATION_TYPE_BELONGS_TO, 'ModuleUser_EntityUser', 'user_id')
+    );
+    
     
     public function ValidateUserExists($sValue) {
         if((int)$sValue === 0 ){
@@ -32,6 +36,10 @@ class PluginWidjet_ModuleWidjet_EntityToken extends EntityORM
     }
     
     public function ValidateToken($sValue) {
+        if($oToken = $this->PluginWidjet_Widjet_GetTokenByDomain($sValue)){
+            return $this->Lang_Get('plugin.widjet.widjet.notices.error_validate_exists');
+        }
+        
         $this->setToken(md5(
             Config::Get('plugin.widjet.key') . 
             (new DateTime())->format('YmdHis') . 

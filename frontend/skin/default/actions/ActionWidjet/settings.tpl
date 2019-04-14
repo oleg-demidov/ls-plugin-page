@@ -37,15 +37,27 @@
     {/if}
 
     {$items = []}
-    {foreach $aTemplates as $oTemplate}
+    {foreach $aTemplates as $oTemplate name="templates"}
         {capture name="pane"}
-            <iframe src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}"}" frameborder="0"></iframe><br>
+            
+            
+                
+            {capture name="val_code"}{strip}
+                    <iframe style="transform:scale(1)" width="200" height="150" src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}"}" frameborder="0"></iframe>
+            {/strip}{/capture}
+
+            <div class="js-container-widjet d-flex justify-content-center p-3">{$smarty.capture.val_code}</div>
+            
             {component "bs-form.textarea" 
+                classes = "js-to-widjet"
                 label = $aLang.plugin.widjet.settings.code.label
-                value = "&lt;iframe src=&quot;{router page="widjet/?template={$oTemplate->getTemplate()}"} 
-frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;"}
+                value = $smarty.capture.val_code}
             
         {/capture}
+        
+        {if $smarty.foreach.templates.first}
+            {$sActiveItem = $oTemplate->getName()}
+        {/if}
 
         {$items[] = [
             text => $oTemplate->getTitle(),
@@ -57,10 +69,11 @@ frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;"}
     {if $aTemplates}
         <div class="d-flex">
             {component "bs-tabs"
+                activeItem = $sActiveItem
                 classes = "mt-3  flex-column"
                 items   = $items
                 bmods   = "pills"
-                classesPanes = "p-3"
+                classesPanes = "p-3 js-show-widjet w-100"
             }
         </div>
     {/if}
