@@ -36,48 +36,51 @@
         }
     {/if}
 
-    {$items = []}
-    {foreach $aTemplates as $oTemplate name="templates"}
-        {capture name="pane"}
-            
-            
-                
-            {capture name="val_code"}{strip}
-                    <iframe style="transform:scale(1)" width="200" height="150" src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}"}" frameborder="0"></iframe>
-            {/strip}{/capture}
+    {if $oTokenActive}
 
-            <div class="js-container-widjet d-flex justify-content-center p-3">{$smarty.capture.val_code}</div>
-            
-            {component "bs-form.textarea" 
-                classes = "js-to-widjet"
-                label = $aLang.plugin.widjet.settings.code.label
-                value = $smarty.capture.val_code}
-            
-        {/capture}
-        
-        {if $smarty.foreach.templates.first}
-            {$sActiveItem = $oTemplate->getName()}
+         {$items = []}
+        {foreach $aTemplates as $oTemplate name="templates"}
+            {capture name="pane"}
+
+
+
+                {capture name="val_code"}{strip}
+                        <iframe  {cattr list=$oTemplate->getAttributes()}  src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}&{$oTemplate->getQueryParams()}"}" frameborder="0"></iframe>
+                {/strip}{/capture}
+
+                <div class="js-container-widjet d-flex justify-content-center p-3">{$smarty.capture.val_code}</div>
+
+                {component "bs-form.textarea" 
+                    classes = "js-to-widjet"
+                    label = $aLang.plugin.widjet.settings.code.label
+                    value = $smarty.capture.val_code}
+
+            {/capture}
+
+            {if $smarty.foreach.templates.first}
+                {$sActiveItem = $oTemplate->getName()}
+            {/if}
+
+            {$items[] = [
+                text => $oTemplate->getTitle(),
+                name => $oTemplate->getName(),
+                content => $smarty.capture.pane
+            ]}
+        {/foreach}
+
+        {if $aTemplates}
+            <div class="d-flex">
+                {component "bs-tabs"
+                    activeItem = $sActiveItem
+                    classes = "mt-3  flex-column"
+                    items   = $items
+                    bmods   = "pills"
+                    classesPanes = "p-3 js-show-widjet w-75"
+                }
+            </div>
         {/if}
 
-        {$items[] = [
-            text => $oTemplate->getTitle(),
-            name => $oTemplate->getName(),
-            content => $smarty.capture.pane
-        ]}
-    {/foreach}
-    
-    {if $aTemplates}
-        <div class="d-flex">
-            {component "bs-tabs"
-                activeItem = $sActiveItem
-                classes = "mt-3  flex-column"
-                items   = $items
-                bmods   = "pills"
-                classesPanes = "p-3 js-show-widjet w-100"
-            }
-        </div>
     {/if}
-
     
 {/block}
 

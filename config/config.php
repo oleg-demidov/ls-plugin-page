@@ -2,7 +2,6 @@
 /**
  * Таблица БД
  */
-$config['$root$']['db']['table']['widjet_widjet'] = '___db.table.prefix___widjet';
 $config['$root$']['db']['table']['widjet_widjet_token'] = '___db.table.prefix___widjet_token';
 
 $config['key'] = 'jdnlskvdrjng5iga8hwiv-q324hfg';
@@ -11,10 +10,7 @@ $config['list'] = [
     'vertical'
 ];
 $config['widjet'] = [
-    'list' => [
-        'widjet', 
-        'vertical'
-    ],
+    
     'allow_params' => [
         'show_number',
         'show_count',
