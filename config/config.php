@@ -12,10 +12,10 @@ $config['list'] = [
 $config['widjet'] = [
     
     'allow_params' => [
-        'show_number',
-        'show_count',
+        'showCumber',
+        'showCount',
         'text',
-        'text_color',
+        'textColor',
         'template',
         'starWidth'
     ]

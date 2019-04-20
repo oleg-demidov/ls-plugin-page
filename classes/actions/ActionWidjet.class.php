@@ -51,7 +51,6 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
     public function EventShow() {
         $this->Component_RemoveAll();
         $this->Component_Add('widjet:widjet');   
-        //$this->Component_Add('widjet:jquery');
         Config::Set('head.template', ['css' => [], 'js' => []]);
         $this->Viewer_SetHtmlHeadFiles($this->Asset_BuildHeadItems());
         

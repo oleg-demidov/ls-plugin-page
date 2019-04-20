@@ -10,4 +10,7 @@ class PluginWidjet_ModuleWidjet_EntityTemplate extends Entity
     public function getParams() {
         return parent::getParams()?parent::getParams():[];
     }
+    public function getParam($sName) {
+        return isset($this->getParams()[$sName])?$this->getParams()[$sName]:'';
+    }
 }

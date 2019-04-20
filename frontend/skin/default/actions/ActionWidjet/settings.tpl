@@ -48,7 +48,8 @@
                         <iframe  {cattr list=$oTemplate->getAttributes()}  src="{router page="widjet/?template={$oTemplate->getTemplate()}&token={$oTokenActive->getToken()}&{$oTemplate->getQueryParams()}"}" frameborder="0"></iframe>
                 {/strip}{/capture}
 
-                <div class="js-container-widjet d-flex justify-content-center p-3">{$smarty.capture.val_code}</div>
+                <div class="js-container-widjet {if $oTemplate->getParam('textColor') == 'white'}bg-secondary{/if} d-flex justify-content-center p-3">
+                    {$smarty.capture.val_code}</div>
 
                 {component "bs-form.textarea" 
                     classes = "js-to-widjet"

@@ -6,7 +6,7 @@ class PluginWidjet_ModuleWidjet_EntityToken extends EntityORM
         [
             'domain', 
             'regexp', 
-            'pattern' => '/[a-zA-Z0-9А-Яа-я]+\.[a-zA-Z0-9А-Яа-я]+/u', 
+            'pattern' => '/^[a-zA-Z0-9А-Яа-я]+\.[a-zA-Z0-9А-Яа-я]+$/u', 
             'allowEmpty' => false,
             'label' => 'Домен'
         ],
