@@ -26,7 +26,8 @@ return [
         'notices' => [
             'error_validate_exists' => 'Такой домен уже зарегестрирован',
             'add' => 'Вы подписались на "%%event_name%%"',
-            'remove' => 'Вы отписались от "%%event_name%%"'
+            'remove' => 'Вы отписались от "%%event_name%%"',
+            'token_not_found' => 'Сайт не найден'
         ]
     ]
 ];
