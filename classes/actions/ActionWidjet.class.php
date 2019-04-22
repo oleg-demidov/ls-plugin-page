@@ -41,6 +41,7 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
         $this->AddEventPreg('/^[\w_-]+$/i', '/^settings$/i', '/^[\d]*$/i', ['EventSettings', 'widjet_settings']);
         $this->AddEventPreg('/^[\w_-]+$/i', '/^add$/i', ['EventAdd', 'widjet_add']);
         $this->AddEventPreg('/^error_domain$/i', 'EventError');
+        $this->AddEventPreg('/^remove-site$/i',  '/^[\d]*$/i', 'EventRemove');
     }
     
     public function EventError() {
@@ -69,6 +70,10 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
         $aParams['domain'] = $oToken->getDomain();
         $aParams['domain_root'] = parse_url(Config::Get('path.root.web'), PHP_URL_HOST);
         
+        if(!isset($aParams['url'])){
+            $aParams['url'] = $oToken->getUser()->getProfileUrl();
+        }
+        
         $this->SetTemplateAction('widjet');
         $this->Viewer_Assign('aWidjetParams', $aParams);
         $this->Viewer_Assign('oUser', $oToken->getUser());
@@ -85,6 +90,10 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
         
         if(!$oTokenActive = $this->PluginWidjet_Widjet_GetTokenById($this->GetParam(1)) and $aTokens){
             $oTokenActive = $aTokens[0];
+        }
+        
+        if(!$oTokenActive){
+            Router::LocationAction(Config::Get('plugin.widjet.action'). '/'.$this->oUserProfile->getLogin().'/add');
         }
         
         $this->Menu_Get('settings')->setActiveItem('widjet');
@@ -115,18 +124,43 @@ class PluginWidjet_ActionWidjet extends ActionPlugin{
             if($oToken->_Validate()){
                 $oToken->Save();
                 $this->Message_AddNotice($this->Lang_Get('common.success.save'), null, true);
-                Router::LocationAction('widjet/'.$this->oUserProfile->getLogin().'/settings');
+                Router::LocationAction(Config::Get('plugin.widjet.action'). '/'.$this->oUserProfile->getLogin().'/settings');
             }else{
                 $this->Message_AddError($oToken->_getValidateError());
             }
         }
         
+        $aTokens = $this->PluginWidjet_Widjet_GetTokenItemsByUserId($this->oUserProfile->getId());
+        
         $this->Menu_Get('settings')->setActiveItem('widjet');
         
+        $this->Viewer_Assign('aTokens', $aTokens);
         $this->Viewer_Assign('oToken', $oToken);
         $this->SetTemplateAction('add');
     }
     
+    public function EventRemove() {
+        
+        $this->Security_ValidateSendForm();
+        
+        if(!$this->oUserProfile = $this->User_GetUserCurrent()){
+            return $this->EventNotFound();
+        }
+        
+        $oToken = $this->PluginWidjet_Widjet_GetTokenById($this->GetParam(0));
+        
+        if(!$oToken){
+            $this->Message_AddError($this->Lang_Get('plugin.widjet.widjet.notices.token_not_found'), null, true);
+        }else{
+            if($oToken->Delete()){
+                $this->Message_AddNotice($this->Lang_Get('common.success.remove'), null, true);
+            }
+        }
+        
+        Router::LocationAction(Config::Get('plugin.widjet.action'). '/' . $this->oUserProfile->getLogin(). '/settings');
+        
+        $this->SetTemplate(false);
+    }
     
     
     public function EventShutdown() {

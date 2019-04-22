@@ -17,14 +17,18 @@ $config['widjet'] = [
         'text',
         'textColor',
         'template',
-        'starWidth'
+        'starWidth',
+        'url',
+        'settingsBackground'
     ]
 ];
 
 /**
  * Роутинг
  */
-$config['$root$']['router']['page']['widjet'] = 'PluginWidjet_ActionWidjet';
+$config['action'] = 'widjet';
+
+$config['$root$']['router']['page'][$config['action']] = 'PluginWidjet_ActionWidjet';
 
 $config['$root$']['block']['settingsWidjet'] = array(
     'action' => array(
