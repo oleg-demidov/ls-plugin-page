@@ -1,12 +1,12 @@
 <?php
 
-class PluginWidjet_HookProfileSettings extends Hook {
+class PluginPage_HookAdmin extends Hook {
     
     /**
      * Регистрируем хуки
      */
     public function RegisterHook() {
-        $this->AddHook('menu_before_prepare', 'Menu');
+        //$this->AddHook('menu_before_prepare', 'Menu');
     }
 
     public function Menu($aParams) { 

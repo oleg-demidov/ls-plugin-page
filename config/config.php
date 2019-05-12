@@ -2,46 +2,44 @@
 /**
  * Таблица БД
  */
-$config['$root$']['db']['table']['widjet_widjet_token'] = '___db.table.prefix___widjet_token';
+$config['$root$']['db']['table']['page_page'] = '___db.table.prefix___page';
+$config['$root$']['db']['table']['page_page_content'] = '___db.table.prefix___page_content';
 
-$config['key'] = 'jdnlskvdrjng5iga8hwiv-q324hfg';
-$config['list'] = [
-    'widjet', 
-    'vertical'
-];
-$config['widjet'] = [
-    
-    'allow_params' => [
-        'showCumber',
-        'showCount',
-        'text',
-        'textColor',
-        'template',
-        'starWidth',
-        'url',
-        'settingsBackground'
-    ]
-];
+
+$config['$root$']['router']['page']['page'] = 'PluginPage_ActionPage';
 
 /**
- * Роутинг
+ * Настройка ЧПУ URL 
+ * Допустимы шаблоны:
+ * %year% - год  (2010)
+ * %month% - месяц (08)
+ * %day% - день (24)
+ * %hour% - час (17)
+ * %minute% - минуты (06)
+ * %second% - секунды (54)
+ * %login% - логин автора топика (admin)
+ * %id% - id  (325)
+ * %url% - url  (325)
+ * %title% - заголовок топика в транслите 
+ *
+ * В шаблоне обязательно должен быть %id% или %title%, это необходимо для точной идентификации топика
  */
-$config['action'] = 'widjet';
-
-$config['$root$']['router']['page'][$config['action']] = 'PluginWidjet_ActionWidjet';
-
-$config['$root$']['block']['settingsWidjet'] = array(
-    'action' => array(
-        'widjet' => [
-            '{widjet_settings}', '{widjet_add}'
-        ]
-    ),
-    'blocks' => array(
-        'left' => array(
-            'menuSettings'     => array('priority' => 100)
-            
-        )
-    )
+$config['url'] = '%url%.html';
+/**
+ * Список регулярных выражений для частей URL топика
+ * Без необходимых навыков лучше этот параметр не менять
+ */
+$config['url_preg'] = array(
+    '%year%' => '(\d{4})',
+    '%month%' => '(\d{2})',
+    '%day%' => '(\d{2})',
+    '%hour%' => '(\d{2})',
+    '%minute%' => '(\d{2})',
+    '%second%' => '(\d{2})',
+    '%login%' => '([\w\-\_]+)',
+    '%id%' => '(\d+)',
+    '%title%' => '([\w\-\_]+)',
+    '%url%' => '([\w\-\_]+)',
 );
 
 return $config;

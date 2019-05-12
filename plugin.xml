@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin>
 	<name>
-		<lang name="default">Widjet</lang>
+		<lang name="default">Page</lang>
 	</name>
 	<author>
 		<lang name="default">Oleg Demidov</lang>
@@ -12,10 +12,11 @@
 	<requires>
 		<livestreet>2.0.0</livestreet>
 		<plugins>
+                    <plugin>admin</plugin>
 		</plugins>
 	</requires>
 	<description>
-		<lang name="default">Widjet</lang>
-		<lang name="russian">Виджет</lang>
+		<lang name="default">Page</lang>
+		<lang name="russian">Статичная страница</lang>
 	</description>
 </plugin>

@@ -12,7 +12,7 @@ if (!class_exists('Plugin')) {
     die('Hacking attempt!');
 }
 
-class PluginWidjet extends Plugin
+class PluginPage extends Plugin
 {
         
     protected $aInherits = [
