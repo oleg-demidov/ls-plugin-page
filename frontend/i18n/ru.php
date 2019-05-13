@@ -10,9 +10,9 @@ return [
             'label' => 'Код виджета:'
         ]
     ],
-    'widjet' => [
-        'menu_settings' => [
-            'text' => 'Виджет'
+    'admin' => [
+        'nav' => [
+            'text' => 'Страницы'
         ],
         'add' => [
             'title' => 'Создать виджет',

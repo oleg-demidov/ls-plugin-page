@@ -28,13 +28,13 @@ class PluginPage extends Plugin
 //        ]);
 
 //        $this->Component_Add('subscribe:subscribe');
-
+        
         
     }
 
     public function Activate()
     {
-        
+        $this->Category_CreateTargetType('page', 'Страницы', array(), true);
         return true;
     }
 

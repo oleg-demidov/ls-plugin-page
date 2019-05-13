@@ -6,24 +6,27 @@ class PluginPage_HookAdmin extends Hook {
      * Регистрируем хуки
      */
     public function RegisterHook() {
-        //$this->AddHook('menu_before_prepare', 'Menu');
+        /**
+         * Хук на отображение админки
+         */
+        $this->AddHook('init_action_admin', 'InitActionAdmin');
     }
 
-    public function Menu($aParams) { 
+    public function InitActionAdmin($aParams) { 
         
-        if($aParams['menu']->getName() != 'settings'){
-            return false;
-        }
+       /**
+         * Получаем объект главного меню
+         */
+        $oMenu = $this->PluginAdmin_Ui_GetMenuMain();
+        /**
+         * Добавляем новый раздел
+         */
+        $oSection =  Engine::GetEntity('PluginAdmin_Ui_MenuSection');
         
-        if(!$oUser = $this->User_GetUserByLogin(Router::GetActionEvent())){
-            return false;
-        }
+        $oSection->SetCaption($this->Lang_Get('plugin.page.admin.nav.text'))->SetName('page')->SetUrl('plugin/page')->setIcon('file');
         
-        $aParams['menu']->appendChild(Engine::GetEntity("ModuleMenu_EntityItem", [
-            'name' => 'widjet',
-            'title' => 'plugin.widjet.widjet.menu_settings.text',
-            'url' => 'widjet/'.$oUser->getLogin(). '/settings'
-        ]));
+        
+        $oMenu->AddSection( $oSection );
         
         
     }
