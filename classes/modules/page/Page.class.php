@@ -8,5 +8,4 @@ class PluginPage_ModulePage extends ModuleORM
         parent::Init(); 
     }
     
-    
 }

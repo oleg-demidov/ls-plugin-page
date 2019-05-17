@@ -27,6 +27,7 @@ class PluginPage_ActionAdmin_EventPage extends Event
         $this->SetTemplateAction('page-add'); 
         
         $this->Component_Add('bootstrap');
+        $this->Component_Add('tinymce');
         
         $oPage = $this->PluginPage_Page_GetPageById( $this->GetParam(0) );
         
@@ -37,6 +38,7 @@ class PluginPage_ActionAdmin_EventPage extends Event
             
             $oPage->_setData(getRequest('page'));
             $oPage->setCategories(getRequest('categories'));
+            $oPage->setUserId($this->oUserCurrent->getId());
                                    
             if($oPage->_Validate()){ 
                 if($oPage->Save()){

@@ -2,6 +2,11 @@
 
 class PluginPage_ModulePage_EntityContent extends EntityORM
 {
+    protected $aJsonFields = [
+        'data'
+    ];
+
+
     protected $aValidateRules = [
         [
             'text', 'string'
