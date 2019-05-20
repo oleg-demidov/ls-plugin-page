@@ -3,7 +3,7 @@
 class PluginPage_ModulePage_EntityPage extends EntityORM
 {
     protected $aRelations = array(
-        'content' => array(self::RELATION_TYPE_HAS_ONE, 'PluginPage_ModulePage_EntityContent', 'content_id')
+        'content' => array(self::RELATION_TYPE_BELONGS_TO, 'PluginPage_ModulePage_EntityContent', 'content_id')
     );
     
     protected $aValidateRules = [
@@ -19,8 +19,7 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
          */
         'category' => [
             'class' => 'ModuleCategory_BehaviorEntity',
-            'target_type' => 'page',
-            'label' => 'Категория:'
+            'target_type' => 'page'
         ]
     );
     
@@ -35,7 +34,7 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
         
         $aData = [];
         if(is_string($this->getDescription())){
-            $aData['descripton'] = $this->getDescription();
+            $aData['description'] = $this->getDescription();
         }
         if(is_string($this->getKeywords())){
             $aData['keywords'] = $this->getKeywords();
@@ -47,5 +46,40 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
         }
         
         return $bResult;
+    }
+    
+    public function getContentOne($sKey) {
+        if(!$this->getContent()){
+            return null;
+        }
+        
+        return $this->getContent()->_getDataOne($sKey);
+    }
+    
+    public function getDescription() {
+        if($mResult = $this->getContentOne('data')){
+            if(!isset($mResult['description'])){
+                return null;
+            }
+            return $mResult['description'];
+        }
+        return parent::getDescription();
+    }
+    
+    public function getText() {
+        if($mResult = $this->getContentOne('text')){
+            return $mResult;
+        }
+        return parent::getText();
+    }
+    
+    public function getKeywords() {
+        if($mResult = $this->getContentOne('data')){
+            if(!isset($mResult['keywords'])){
+                return null;
+            }
+            return $mResult['keywords'];
+        }
+        return parent::getKeywords();
     }
 }

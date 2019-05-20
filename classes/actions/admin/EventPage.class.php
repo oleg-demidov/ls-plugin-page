@@ -30,11 +30,11 @@ class PluginPage_ActionAdmin_EventPage extends Event
         $this->Component_Add('tinymce');
         
         $oPage = $this->PluginPage_Page_GetPageById( $this->GetParam(0) );
-        
+        if(!$oPage){
+            $oPage = Engine::GetEntity('PluginPage_Page_Page' );
+        }
+            
         if(isPost()){ 
-            if(!$oPage){
-                $oPage = Engine::GetEntity('PluginPage_Page_Page' );
-            }
             
             $oPage->_setData(getRequest('page'));
             $oPage->setCategories(getRequest('categories'));
@@ -44,7 +44,7 @@ class PluginPage_ActionAdmin_EventPage extends Event
                 if($oPage->Save()){
                     
                     $this->Message_AddNoticeSingle($this->Lang_Get('common.success.save'),'',true);
-                    Router::LocationAction("admin/plugin/page/list");
+                    //Router::LocationAction("admin/plugin/page/list");
                     
                 }else{
                     $this->Message_AddErrorSingle($this->Lang_Get('common.error.system.base'));
