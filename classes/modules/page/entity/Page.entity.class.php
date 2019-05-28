@@ -30,7 +30,11 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
         }
         
         $oContent = Engine::GetEntity('PluginPage_ModulePage_EntityContent');
-        $oContent->setText($this->getText());
+        
+        $this->Text_LoadJevixConfig('page');
+        
+        $oContent->setText(htmlspecialchars( $this->Text_Parser($this->getSource()) ));
+        $oContent->setSource(htmlspecialchars( $this->getSource() ));
         
         $aData = [];
         if(is_string($this->getDescription())){
@@ -66,11 +70,8 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
         return parent::getDescription();
     }
     
-    public function getText() {
-        if($mResult = $this->getContentOne('text')){
-            return $mResult;
-        }
-        return parent::getText();
+    public function getContentText() {
+        return htmlspecialchars_decode($this->getContentOne('text'));
     }
     
     public function getKeywords() {

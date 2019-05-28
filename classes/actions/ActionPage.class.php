@@ -34,20 +34,22 @@ class PluginPage_ActionPage extends ActionPlugin{
     }
     protected function RegisterEvent() {  
         
-        $this->AddEventPreg(
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            '/^([\w_-]+)?$/i', 
-            'EventShow');
+        $this->AddEventPreg( '/^([\w_-]+)?$/i', ['EventShow', 'page']);
        
     }
     
     public function EventShow() {
+        $oPage = $this->PluginPage_Page_GetPageByUrl($this->sCurrentEvent);
+        
+        if(!$oPage){
+            return $this->EventNotFound();
+        }
+        
+        $this->Viewer_SetHtmlKeywords($oPage->getKeywords());
+        $this->Viewer_SetHtmlDescription($oPage->getDescription());
+        $this->Viewer_SetHtmlTitle($oPage->getTitle());
+        
+        $this->Viewer_Assign('oPage', $oPage);
         $this->SetTemplateAction('page');
     }
     

@@ -44,7 +44,7 @@ class PluginPage_ActionAdmin_EventPage extends Event
                 if($oPage->Save()){
                     
                     $this->Message_AddNoticeSingle($this->Lang_Get('common.success.save'),'',true);
-                    //Router::LocationAction("admin/plugin/page/list");
+                    Router::LocationAction("admin/plugin/page/list");
                     
                 }else{
                     $this->Message_AddErrorSingle($this->Lang_Get('common.error.system.base'));

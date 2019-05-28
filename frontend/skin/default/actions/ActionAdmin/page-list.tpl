@@ -36,7 +36,8 @@
                 <tr data-id="{$oPage->getId()}">
                     <td>{$oPage->getId()}</td>
                     <td>
-                        {$oPage->getTitle()}
+                        <a href="{router page="{Config::Get('plugin.page.action')}/{$oPage->getUrl()}"}">{$oPage->getTitle()}</a>
+                        
                     </td>
                     <td>
                         {($oPage->category->getCategory())?$oPage->category->getCategory()->getTitle():'-'}

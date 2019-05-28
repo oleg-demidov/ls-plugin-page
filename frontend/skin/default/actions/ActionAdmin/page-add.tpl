@@ -14,7 +14,7 @@
         name    = 'page[url]' 
         label   = 'Url:'}
         
-    {component "tinymce" name="page[text]" label="Текст:" value   = $oPage->getText()}
+    {component "tinymce" name="page[source]" label="Текст:" value   = $oPage->getContentOne('source')}
     
     {capture name="meta"}
         {component "bs-form.textarea"
