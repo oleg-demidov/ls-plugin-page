@@ -31,6 +31,10 @@ $config['$root$']['jevix']['page'] = [
             array('href' => '#link', 'name' => '#text', 'target' => '#text', 'class' => '#text')
         ],
         [
+            'div', 
+            array('class' => '#text')
+        ],
+        [
             'img', 
             array('src', 'style' => '#text', 'alt' => '#text', 'title' => '#text', 'align' => array('right', 'left', 'center'), 'width' => '#int', 'height' => '#int', 'hspace' => '#int', 'vspace' => '#int', 'class' => '#text')
         ],

@@ -1,8 +1,0 @@
-{
-    "name": "jquery",
-    "version": "1.0.0",
-    "scripts": {
-        "jquery": "jquery.js",
-        "widget": "widget.js"
-    }
-}

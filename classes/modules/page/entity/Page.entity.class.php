@@ -83,4 +83,8 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
         }
         return parent::getKeywords();
     }
+    
+    public function getUrlEdit() {
+        return Router::GetPath('admin/plugin/page/edit/'. $this->getId());
+    }
 }

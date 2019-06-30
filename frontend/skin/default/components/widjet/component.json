@@ -1,9 +1,0 @@
-{
-    "name": "widjet",
-    "version": "1.0.0",
-    "dependencies":{
-    },
-    "scripts":{
-        "widjet":"js/widjet.js"
-    }
-}
