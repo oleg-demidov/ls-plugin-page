@@ -87,4 +87,11 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
     public function getUrlEdit() {
         return Router::GetPath('admin/plugin/page/edit/'. $this->getId());
     }
+    
+    public function afterDelete() {
+        parent::afterDelete();
+        
+        $this->getContent()->Delete();
+        
+    }
 }
