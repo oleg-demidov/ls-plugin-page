@@ -7,8 +7,8 @@ class PluginPage_ModulePage_EntityPage extends EntityORM
     );
     
     protected $aValidateRules = [
-        ['title', 'string', 'min' => 10, 'max' => 200],
-        ['text', 'string', 'min' => 100, 'max' => 5000],
+        ['title', 'string', 'min' => 3, 'max' => 200],
+        ['text', 'string', 'min' => 3, 'max' => 5000],
         ['url', 'string', 'min' => 3, 'max' => 200]
     ];
 
